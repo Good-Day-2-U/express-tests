@@ -10,7 +10,8 @@ router.get('/', (req, res) => {
     buttons: [
       { text: 'Home' , urlLink: '/', buttonFunc: 'homeButton()'},
       { text: 'Page 2', urlLink: '/page2', buttonFunc: 'page2()'},
-      { text: 'Page 3' , urlLink: '/page3', buttonFunc: 'page3()'}
+      { text: 'Page 3' , urlLink: '/page3', buttonFunc: 'page3()'},
+      { text: 'Page 4' , urlLink: '/page4', buttonFunc: 'page4()'}
     ]
   });
 });
