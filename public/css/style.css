@@ -9,9 +9,42 @@ body {
   height: 100vh;
 }
 
+#nameArea {
+  width: 55ch;
+}
+
 .buttonLinks {
   display: flex;
   margin: 3rem;
+}
+
+#dragTitle {
+  text-align: center;
+  cursor: grab;
+  background-color: blue;
+  user-select: none;
+}
+
+#dragTitle:active {
+  cursor: grabbing;
+}
+
+#draggable button {
+  user-select: none;
+}
+
+#draggable {
+  height: auto;
+  width: auto;
+  top: 15%;
+  left: 15%;
+  position:absolute;
+
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  user-select: none;
 }
 
 .svgContainer {

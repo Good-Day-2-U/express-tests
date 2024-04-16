@@ -8,8 +8,22 @@
   {{else}}
   <title>Title TBD</title>
   {{/if}}
+  {{! Stylesheets }}
+  {{#if stylesheets}}
+  {{#each stylesheets}}
+  <link rel="stylesheet" href="{{this}}">
+  {{/each}}
+  {{/if}}
 </head>
 <body>
   {{{body}}}
+
+
+  {{! Scripts }}
+  {{#if scripts}}
+  {{#each scripts}}
+  <script src="{{this}}" type="module"></script>
+  {{/each}}
+  {{/if}}
 </body>
 </html>

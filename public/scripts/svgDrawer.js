@@ -2,8 +2,8 @@
 const createDrawingArea = function() {
   const drawingArea = document.querySelector('.svgContainer');
   const svgBox = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svgBox.setAttribute("width","1000")
-  svgBox.setAttribute("height","1000")
+  svgBox.setAttribute("width","500")
+  svgBox.setAttribute("height","500")
   svgBox.setAttribute("id","svgCanvas")
   svgBox.style.backgroundColor = 'white'
   drawingArea.appendChild(svgBox)
@@ -12,7 +12,7 @@ const createDrawingArea = function() {
 createDrawingArea();
 
 const svgCanvas = document.querySelector('#svgCanvas')
-
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Function to get mouse position relative to SVG canvas
@@ -27,7 +27,16 @@ const getMousePosition = function(event) {
   }
 };
 
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+// Variables
+
+let brushSize = "1px";
+let idCount = 0;
+let svgsOnCanvas = [];
+
+// ////////////////////////////////////////////////////////////////
 
 
 // Circle Drawing Class and Function
@@ -57,23 +66,12 @@ class Circle1{
   }
 
 }
-const svgCircleOne = new Circle1("SC1", 50, 50 , 40, "green", 4, "yellow")
-const svgCircleTwo = new Circle1("SC1", 400, 750 , 40, "green", 4, "red")
-const svgCircleThree = new Circle1("SC1", 266, 466 , 140, "black", 40, "orange")
-svgCircleOne.createCircleElement(svgCanvas)
-svgCircleTwo.createCircleElement(svgCanvas)
-svgCircleThree.createCircleElement(svgCanvas)
 
-
+// ////////////////////////////////////////////////////////////////
 
 
 
 // Drawing Lines and Paths with the mouse
-
-let brushSize = "1px";
-
-let idCount = 0;
-let svgsOnCanvas = [];
 
 const drawOnCanvasWithPath = function(svgCanvas) {
   let isDrawing = false;
@@ -124,6 +122,53 @@ const drawOnCanvasWithPath = function(svgCanvas) {
   svgCanvas.addEventListener("mouseleave", stopDrawing);
 };
 
-// Call the function passing the SVG canvas
+// Call the function and pass the SVG canvas
 drawOnCanvasWithPath(svgCanvas);
+
+
+
+
+// Draw a circle wit hthe mouse
+
+const drawCircleWithMouse = function(svgCanvas) {
+  let isDrawing = false;
+  let startX = 0;
+  let startY = 0;
+
+  // Function to start drawing
+  const startDrawing = function(event) {
+    isDrawing = true;
+    const { x, y } = getMousePosition(event);
+    startX = x;
+    startY = y;
+  };
+
+  // Function to continue drawing
+  const continueDrawing = function(event) {
+    if (isDrawing) {
+      const { x, y } = getMousePosition(event);
+      const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+      const circle = new Circle1("SC1", startX, startY, radius, "black", 2, "none");
+      circle.createCircleElement(svgCanvas);
+    }
+  };
+
+  // Function to stop drawing
+  const stopDrawing = function() {
+    isDrawing = false;
+  };
+
+  // Event listeners
+  svgCanvas.addEventListener("mousedown", startDrawing);
+  svgCanvas.addEventListener("mousemove", continueDrawing);
+  svgCanvas.addEventListener("mouseup", stopDrawing);
+  svgCanvas.addEventListener("mouseleave", stopDrawing);
+};
+
+// Call the function passing the SVG canvas
+// drawCircleWithMouse(svgCanvas);
+
+
+
+
 
