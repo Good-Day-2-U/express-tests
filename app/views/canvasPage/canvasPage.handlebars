@@ -7,7 +7,30 @@
   <button id="page2Button">Canvas</button>
   <button id="page3Button">About Page</button>
 </div>
+<br>
+<br>
+<list>
+  <input type="radio" class="eraserRadio" id="eraser">
+  <input type="radio" class="eraserRadio" id="eraserOff" checked="true">
+</list>
+<br>
 
+
+<input type="number" id="brushSize" name="brush_size" max="117" value="10">
+<label for="brushSize">Brush Size</label>
+
+{{!-- SVG canavs Container --}}
+<div class="svgContainer"></div>
+
+
+{{!-- Save SVG Button --}}
+<div id="saveField">
+  <input type="text" id="nameArea" maxlength="50">
+  <button id="saveButton">Save SVG</button>
+</div>
+
+
+{{!-- Draggable Pallet Test --}}
 <div style="background-color: bisque;" id="draggable">
 
   <header id="dragTitle">Drag Me!</header>
@@ -27,11 +50,4 @@
     <button>9</button>
   </div>
 
-</div>
-
-<div class="svgContainer"></div>
-
-<div id="saveField">
-  <input name="nameArea" id="nameArea" maxlength="50"></input>
-  <button id="saveButton">Save SVG</button>
 </div>
