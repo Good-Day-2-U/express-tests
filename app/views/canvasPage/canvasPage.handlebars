@@ -2,6 +2,12 @@
 
 <h1>Drawing Canvas</h1>
 
+{{#if user}}
+  <h3>Welcome, {{user.name}}! Nickname, {{user.username}}</h3>
+{{else}}
+  <h3></h3>
+{{/if}}
+
 <div class="buttonLinks">
   <button id="homeButton">HOME</button>
   <button id="page2Button">Canvas</button>
