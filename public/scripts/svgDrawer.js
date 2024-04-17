@@ -56,6 +56,13 @@ function createDrawingArea() {
 createDrawingArea();
 const svgCanvas = document.querySelector("#svgCanvas");
 
+
+
+
+
+
+
+
 // FIXED Circle Drawing Class and Function
 class Circle1 {
   constructor(name, cx, cy, r, stroke, strokewidth, fill) {
@@ -133,6 +140,8 @@ const drawCircleWithMouse = function (svgCanvas) {
 };
 // drawCircleWithMouse(svgCanvas);
 
+
+// Draw Paintbrush Logic
 function paintBrushLogicRun() {
   // Drawing Lines and Paths with the mouse
 
@@ -197,8 +206,82 @@ function paintBrushLogicRun() {
     drawOnCanvasWithPath(svgCanvas);
   }
 }
-paintBrushLogicRun();
+// paintBrushLogicRun();
 
+
+
+
+
+
+// Drawing Lines with the mouse
+function drawLineWithMouse(svgCanvas) {
+
+
+  // Function to get mouse position relative to SVG canvas
+  let mainMouseX;
+  let mainMouseY;
+  const mousePosData = function (event) {
+    const CTM = svgCanvas.getScreenCTM();
+    if (CTM) {
+      const mouseX = (event.clientX - CTM.e) / CTM.a;
+      const mouseY = (event.clientY - CTM.f) / CTM.d;
+      console.log(`x: ${mainMouseX}, y: ${mainMouseY}`);
+      mainMouseX = mouseX;
+      mainMouseY = mouseY;
+    }
+  };
+  svgCanvas.addEventListener("mousemove", mousePosData);
+
+  
+  let isDrawing = false;
+
+  let startX = mainMouseX;
+  let startY = mainMouseY;
+
+
+
+  // Function to start drawing
+  const startDrawing = function (event) {
+    brushSize = `${brushSizeElement.value}` + "px";
+    isDrawing = true;
+    startX = (mainMouseX);
+    startY = (mainMouseY);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", startX);
+    line.setAttribute("y1", startY);
+    line.setAttribute("x2", mainMouseX);
+    line.setAttribute("y2", mainMouseY);
+    line.setAttribute("stroke", "black");
+    line.setAttribute("stroke-width", brushSize);
+    svgCanvas.appendChild(line);
+  };
+
+  // Function to continue drawing
+  const continueDrawing = function (event) {
+    if (isDrawing) {
+      const { x, y } = getMousePosition(event);
+      const line = svgCanvas.lastChild;
+      line.setAttribute("x2", x);
+      line.setAttribute("y2", y);
+    }
+  };
+
+  // Function to stop drawing
+  const stopDrawing = function () {
+    isDrawing = false;
+  };
+
+  // Event listeners
+  svgCanvas.addEventListener("mousedown", startDrawing);
+  svgCanvas.addEventListener("mousemove", continueDrawing);
+  svgCanvas.addEventListener("mouseup", stopDrawing);
+  svgCanvas.addEventListener("mouseleave", stopDrawing);
+}
+drawLineWithMouse(svgCanvas);
+
+
+
+// Eraser Logic
 function eraserLogicRun() {
   const eraseElement = function (event) {
     if (eraser.checked) {
@@ -217,4 +300,4 @@ function eraserLogicRun() {
   // Event listener for eraser functionality
   svgCanvas.addEventListener("click", eraseElement);
 }
-eraserLogicRun();
+// eraserLogicRun();
