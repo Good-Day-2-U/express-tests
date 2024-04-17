@@ -1,8 +1,9 @@
 // Da App
 
-// Eraser functionality variables
+// Brush functionality variables
 const eraser = document.querySelector("#eraser");
-const eraserOff = document.querySelector("#eraserOff");
+const paintBrush = document.querySelector("#paintBrush");
+const lineBrush = document.querySelector("#lineBrush");
 
 // Variable Eleemnts
 const brushSizeElement = document.querySelector("#brushSize");
@@ -17,7 +18,7 @@ let canvasHeight = 500;
 let canvasBackgroundColor = "white";
 
 // Get all radio buttons with class "eraserRadio"
-const radioButtons = document.querySelectorAll('input[class="eraserRadio"]');
+const radioButtons = document.querySelectorAll('input[class="topRadio"]');
 
 // Add event listener to each radio button
 radioButtons.forEach((radioButton) => {
@@ -152,7 +153,7 @@ function paintBrushLogicRun() {
 
     // Function to start drawing
     const startDrawing = function (event) {
-      if (eraserOff.checked) {
+      if (paintBrush.checked) {
         brushSize = `${brushSizeElement.value}` + "px";
         isDrawing = true;
         idCount += 1;
@@ -178,7 +179,7 @@ function paintBrushLogicRun() {
 
     // Function to continue drawing
     const continueDrawing = function (event) {
-      if (isDrawing && eraserOff.checked) {
+      if (isDrawing && paintBrush.checked) {
         const svgPath = svgCanvas.lastChild;
         const { x, y } = getMousePosition(event);
         const path = svgPath.getAttribute("d") + ` L${x} ${y}`;
@@ -202,82 +203,93 @@ function paintBrushLogicRun() {
 
   // Call the function and pass the SVG canvas
 
-  if (eraserOff.checked) {
+  if (paintBrush.checked) {
     drawOnCanvasWithPath(svgCanvas);
   }
 }
-// paintBrushLogicRun();
+paintBrushLogicRun();
 
 
 
 
 
 
-// Drawing Lines with the mouse
-function drawLineWithMouse(svgCanvas) {
+ function drawLineLogic() {  
+  // Drawing Lines with the mouse
+  function drawLineWithMouse(svgCanvas) {
 
 
-  // Function to get mouse position relative to SVG canvas
-  let mainMouseX;
-  let mainMouseY;
-  const mousePosData = function (event) {
-    const CTM = svgCanvas.getScreenCTM();
-    if (CTM) {
-      const mouseX = (event.clientX - CTM.e) / CTM.a;
-      const mouseY = (event.clientY - CTM.f) / CTM.d;
-      console.log(`x: ${mainMouseX}, y: ${mainMouseY}`);
-      mainMouseX = mouseX;
-      mainMouseY = mouseY;
-    }
-  };
-  svgCanvas.addEventListener("mousemove", mousePosData);
-
-  
-  let isDrawing = false;
-
-  let startX = mainMouseX;
-  let startY = mainMouseY;
+    // Function to get mouse position relative to SVG canvas
+    let mainMouseX;
+    let mainMouseY;
+    const mousePosData = function (event) {
+      const CTM = svgCanvas.getScreenCTM();
+      if (CTM) {
+        const mouseX = (event.clientX - CTM.e) / CTM.a;
+        const mouseY = (event.clientY - CTM.f) / CTM.d;
+        // console.log(`x: ${mainMouseX}, y: ${mainMouseY}`);
+        mainMouseX = mouseX;
+        mainMouseY = mouseY;
+      }
+    };
+    svgCanvas.addEventListener("mousemove", mousePosData);
 
 
+    let isDrawing = false;
 
-  // Function to start drawing
-  const startDrawing = function (event) {
-    brushSize = `${brushSizeElement.value}` + "px";
-    isDrawing = true;
-    startX = (mainMouseX);
-    startY = (mainMouseY);
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", startX);
-    line.setAttribute("y1", startY);
-    line.setAttribute("x2", mainMouseX);
-    line.setAttribute("y2", mainMouseY);
-    line.setAttribute("stroke", "black");
-    line.setAttribute("stroke-width", brushSize);
-    svgCanvas.appendChild(line);
-  };
+    let startX = mainMouseX;
+    let startY = mainMouseY;
 
-  // Function to continue drawing
-  const continueDrawing = function (event) {
-    if (isDrawing) {
-      const { x, y } = getMousePosition(event);
-      const line = svgCanvas.lastChild;
-      line.setAttribute("x2", x);
-      line.setAttribute("y2", y);
-    }
-  };
 
-  // Function to stop drawing
-  const stopDrawing = function () {
-    isDrawing = false;
-  };
 
-  // Event listeners
-  svgCanvas.addEventListener("mousedown", startDrawing);
-  svgCanvas.addEventListener("mousemove", continueDrawing);
-  svgCanvas.addEventListener("mouseup", stopDrawing);
-  svgCanvas.addEventListener("mouseleave", stopDrawing);
+    // Function to start drawing
+    const startDrawing = function (event) {
+      if(lineBrush.checked) {
+        brushSize = `${brushSizeElement.value}` + "px";
+        isDrawing = true;
+        idCount += 1;
+        startX = (mainMouseX);
+        startY = (mainMouseY);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.id = idCount;
+        line.setAttribute("x1", startX);
+        line.setAttribute("y1", startY);
+        line.setAttribute("x2", mainMouseX);
+        line.setAttribute("y2", mainMouseY);
+        line.setAttribute("stroke", "black");
+        line.setAttribute("stroke-width", brushSize);
+        svgCanvas.appendChild(line);
+
+
+        svgsOnCanvas.push(line);
+        console.log(svgsOnCanvas);
+      }
+    };
+
+    // Function to continue drawing
+    const continueDrawing = function (event) {
+      if (isDrawing && lineBrush.checked) {
+        const { x, y } = getMousePosition(event);
+        const line = svgCanvas.lastChild;
+        line.setAttribute("x2", x);
+        line.setAttribute("y2", y);
+      }
+    };
+
+    // Function to stop drawing
+    const stopDrawing = function () {
+      isDrawing = false;
+    };
+
+    // Event listeners
+    svgCanvas.addEventListener("mousedown", startDrawing);
+    svgCanvas.addEventListener("mousemove", continueDrawing);
+    svgCanvas.addEventListener("mouseup", stopDrawing);
+    svgCanvas.addEventListener("mouseleave", stopDrawing);
+  }
+  drawLineWithMouse(svgCanvas);
 }
-drawLineWithMouse(svgCanvas);
+drawLineLogic();
 
 
 
@@ -292,6 +304,7 @@ function eraserLogicRun() {
         if (index > -1) {
           svgsOnCanvas.splice(index, 1);
           console.log(`${targetElement.id} removed from svgsOnCanvas array`);
+          console.log(svgsOnCanvas);
         }
       }
     }
@@ -300,4 +313,4 @@ function eraserLogicRun() {
   // Event listener for eraser functionality
   svgCanvas.addEventListener("click", eraseElement);
 }
-// eraserLogicRun();
+eraserLogicRun();
