@@ -256,20 +256,22 @@ eraserLogicRun();
 
 // Clear Canvas Functionality
 
-const clearButton = document.querySelector("#clearButton");
-
-function clearCanvas() {
-  const confirmation = window.confirm("Are you sure you want to clear the canvas?");
-  if (confirmation) {
-    svgsOnCanvas.forEach((svg) => {
-      svg.remove();
-      console.log(`${svg.id} removed from canvas`);
-    });
-    svgsOnCanvas = [];
+function clearCanvasLogic(){
+  const clearButton = document.querySelector("#clearButton");
+  function clearCanvas() {
+    const confirmation = window.confirm("Are you sure you want to clear the canvas?");
+    if (confirmation) {
+      svgsOnCanvas.forEach((svg) => {
+        svg.remove();
+        console.log(`${svg.id} removed from canvas`);
+      });
+      svgsOnCanvas = [];
+    }
   }
-}
 
-clearButton.addEventListener("click", clearCanvas);
+  clearButton.addEventListener("click", clearCanvas);
+}
+clearCanvasLogic();
 
 
 

@@ -56,12 +56,26 @@ body {
   user-select: none;
 }
 
-.svgContainer {
-  width: auto;
-  height: auto;
+.centerBodies {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
 }
 
-/* #svgCanvas {
-  width: 100%;
-  height: 100%;
+#cb1 {
+  height: 100px;
+  width: 100px;
+  background-color: salmon;
+}
+
+#cb2 {
+  height: 100px;
+  width: 100px;
+  background-color: salmon;
+}
+
+/* .svgContainer {
+  width: auto;
+  height: auto;
 } */
