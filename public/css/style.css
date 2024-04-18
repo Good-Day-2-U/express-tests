@@ -14,7 +14,9 @@ body {
 }
 
 #brushSize {
-  width: 2.5rem;
+  width: auto;
+  cursor: pointer;
+  /* background: URL HERE; */
 }
 
 .buttonLinks {
@@ -23,9 +25,12 @@ body {
 }
 
 #dragTitle {
-  text-align: center;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: grab;
-  background-color: blue;
+  background-color: rgb(82, 82, 126);
   user-select: none;
 }
 

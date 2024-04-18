@@ -14,17 +14,21 @@
   <button id="page3Button">About Page</button>
 </div>
 <br>
+<button id="clearButton">Clear</button>
 <br>
 <list>
   <input type="radio" class="topRadio" id="eraser">
+  <label for="eraser">Eraser</label>
   <input type="radio" class="topRadio" id="paintBrush" checked="true">
+  <label for="paintBrush">Paint Brush</label>
   <input type="radio" class="topRadio" id="lineBrush">
+  <label for="lineBrush">Line Brush</label>
 </list>
 <br>
 
 
-<input type="number" id="brushSize" name="brush_size" max="117" value="10">
-<label for="brushSize">Brush Size</label>
+<input type="range" min="1" max="117" value="10" id="brushSize" name="brush_size">
+<label for="brushSize">Brush Size: <span id="brushSizeValue">0</span></label>
 
 {{!-- SVG canavs Container --}}
 <div class="svgContainer"></div>
@@ -40,7 +44,7 @@
 {{!-- Draggable Pallet Test --}}
 <div style="background-color: bisque;" id="draggable">
 
-  <header id="dragTitle">Drag Me!</header>
+  <header id="dragTitle">Dragger</header>
   <div class="row1">
     <button>1</button>
     <button>2</button>

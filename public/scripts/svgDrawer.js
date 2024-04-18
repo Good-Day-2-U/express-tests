@@ -9,13 +9,30 @@ const lineBrush = document.querySelector("#lineBrush");
 const brushSizeElement = document.querySelector("#brushSize");
 
 // Variables
-let brushSize = `${brushSizeElement.value}` + "px";
+let brushSize = `${brushSizeElement.value}`;
 let idCount = 0;
 let svgsOnCanvas = [];
 
 let canvasWidth = 500;
 let canvasHeight = 500;
 let canvasBackgroundColor = "white";
+
+// Page Variables and Updates
+
+function brushSizeUpdateLogic(){
+  const brushSizeValue = document.querySelector("#brushSizeValue");
+  brushSizeValue.textContent = brushSize
+
+  if(brushSizeElement !== brushSizeValue) {
+    brushSizeElement.addEventListener("input", () => {
+      brushSize = `${brushSizeElement.value}`;
+      brushSizeValue.textContent = brushSize;
+      console.log(brushSize);
+    });
+  }
+}
+brushSizeUpdateLogic();
+
 
 
 function getRadioButtonLogic() {
@@ -236,6 +253,24 @@ function eraserLogicRun() {
   svgCanvas.addEventListener("click", eraseElement);
 }
 eraserLogicRun();
+
+// Clear Canvas Functionality
+
+const clearButton = document.querySelector("#clearButton");
+
+function clearCanvas() {
+  const confirmation = window.confirm("Are you sure you want to clear the canvas?");
+  if (confirmation) {
+    svgsOnCanvas.forEach((svg) => {
+      svg.remove();
+      console.log(`${svg.id} removed from canvas`);
+    });
+    svgsOnCanvas = [];
+  }
+}
+
+clearButton.addEventListener("click", clearCanvas);
+
 
 
 
